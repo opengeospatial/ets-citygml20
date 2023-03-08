@@ -3,9 +3,18 @@ package org.opengis.cite.citygml20;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientRequest;
 import com.sun.jersey.api.client.ClientResponse;
+
+import java.io.StringWriter;
+import java.io.Writer;
 import java.net.URI;
 import java.util.Map;
 import javax.ws.rs.core.MediaType;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
 import org.opengis.cite.citygml20.util.ClientUtils;
 import org.testng.ITestContext;
 import org.testng.SkipException;
@@ -95,5 +104,27 @@ public class CommonFixture {
             Map<String, String> qryParams, MediaType... mediaTypes) {
         return ClientUtils.buildGetRequest(endpoint, qryParams, mediaTypes);
     }
+	
+	/**
+	 * @param xmlDoc
+	 * @throws Exception
+	 */
+	public String TransformXMLDocumentToXMLString(Document xmlDoc) throws Exception {
+		Transformer tf = TransformerFactory.newInstance().newTransformer();
+		tf.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+		tf.setOutputProperty(OutputKeys.INDENT, "yes");
+		Writer out = new StringWriter();
+		tf.transform(new DOMSource(xmlDoc), new StreamResult(out));
+		return out.toString();
+	}
+    
+    /**
+	 * @param xmlDoc
+	 * @throws Exception
+	 */
+	public void prettyPrint(Document xmlDoc) throws Exception {
+		String str = TransformXMLDocumentToXMLString(xmlDoc);
+		System.out.println(str);
+	}
 
 }

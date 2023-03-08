@@ -10,13 +10,9 @@
     <listener class-name="org.opengis.cite.citygml20.TestFailureListener" />
   </listeners>
 
-  <test name="Conformance Level 1">
+  <test name="CoreValidation">
     <packages>
-      <package name="org.opengis.cite.citygml20.level1" />
+      <package name="org.opengis.cite.citygml20.core" />
     </packages>
-    <classes>
-      <class name="org.opengis.cite.citygml20.SuitePreconditions" />
-    </classes>
   </test>
-  <!-- Add test sets for other conformance classes/levels -->
 </suite>

@@ -54,6 +54,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xercesImpl</artifactId>
+      <version>2.12.2</version>
+    </dependency>
+    <dependency>
       <groupId>org.opengis.cite.teamengine</groupId>
       <artifactId>teamengine-spi</artifactId>
     </dependency>
@@ -73,6 +78,11 @@
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
     </dependency>
+    <dependency>
+	  <groupId>org.citygml4j</groupId>
+	  <artifactId>citygml4j</artifactId>
+	  <version>2.12.2</version>
+	</dependency>
   </dependencies>
 
   <build>
@@ -178,7 +188,8 @@
         <plugin>
           <groupId>io.fabric8</groupId>
           <artifactId>docker-maven-plugin</artifactId>
-          <version>0.28.0</version>
+          <!--<version>0.28.0</version>-->
+          <version>0.30.0</version>
           <configuration>
             <images>
               <image>
