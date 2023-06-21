@@ -4,6 +4,8 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientRequest;
 import com.sun.jersey.api.client.ClientResponse;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.net.URI;
@@ -14,13 +16,18 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.Validator;
 
 import org.opengis.cite.citygml20.util.ClientUtils;
+import org.opengis.cite.citygml20.util.ValidationUtils;
 import org.testng.ITestContext;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 /**
  * A supporting base class that sets up a common test fixture. These
@@ -125,6 +132,27 @@ public class CommonFixture {
 	public void prettyPrint(Document xmlDoc) throws Exception {
 		String str = TransformXMLDocumentToXMLString(xmlDoc);
 		System.out.println(str);
+	}
+	
+	/**
+	 * Description: Identify that a XML document is valid with XSD Template or not
+	 * 
+	 * @param xmlString
+	 * @param xsdPath
+	 * @return
+	 */
+	public boolean isMultipleXMLSchemaValid(String xmlString, String[] arrXsdPath) {
+		try {
+			
+			Schema schema = ValidationUtils.createMultipleSchema(arrXsdPath);
+			Validator validator = schema.newValidator();
+			validator.validate(new StreamSource(new StringReader(xmlString)));
+			
+		} catch (IOException | SAXException e) {
+			System.out.println("Exception: " + e.getMessage());
+			return false;
+		}
+		return true;
 	}
 
 }
