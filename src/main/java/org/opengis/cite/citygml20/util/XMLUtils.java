@@ -5,10 +5,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -406,5 +403,40 @@ public class XMLUtils {
             nodes.add(nodeList.item(i));
         }
         return nodes;
+    }
+
+
+    /**
+     * Get all attribute values with namespace, tag name, attribute name
+     * @param doc
+     * @param ns
+     * @param tagName
+     * @param attrName
+     * @return ArrayList
+     */
+    public static ArrayList<String> getAttributeValue(Document doc, String ns, String tagName, String attrName) {
+        /** Example
+         * <app:textureCoordinates ring="#fLeftExt1">
+         *     ns: app's namespace uri,
+         *     tagName: "textureCoordinates",
+         *     attrName:"ring"
+         */
+        ArrayList<String> resultArrayList = new ArrayList<>();
+        NodeList nodeList = doc.getElementsByTagName("*");
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            if (!Objects.equals(node.getNamespaceURI(), ns))
+                continue;
+            Element ni = (Element) nodeList.item(i);
+            NodeList tagNameItems = ni.getElementsByTagNameNS(ns,tagName);
+            if (tagNameItems.getLength() > 0) {
+                for (int j = 0; j < tagNameItems.getLength(); j++) {
+                    Element tagNameItem = (Element) tagNameItems.item(j);
+                    if (tagNameItem.hasAttribute(attrName))
+                        resultArrayList.add(tagNameItem.getAttribute(attrName));
+                }
+            }
+        }
+        return resultArrayList;
     }
 }
