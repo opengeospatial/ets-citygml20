@@ -15,4 +15,9 @@
       <package name="org.opengis.cite.citygml20.core" />
     </packages>
   </test>
+  <test name="CityGMLModuleValidation">
+    <packages>
+      <package name="org.opengis.cite.citygml20.citygmlmodule" />
+    </packages>
+  </test>
 </suite>

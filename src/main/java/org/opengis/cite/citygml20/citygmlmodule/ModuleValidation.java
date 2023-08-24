@@ -49,7 +49,7 @@ public class ModuleValidation extends CommonFixture {
         assertSchematronValidWith_RefIntegrity(this.testSubject);
     }
 
-    @Test(enabled = false, description = "B.2.4 Building module")
+    @Test(enabled = true, description = "B.2.4 Building module")
     public void verifyBuildingModule() throws Exception {
         //Assert [namespace], [xsd]
         assertContainNamespaceNSchemaValid(this.testSubject,"Building", XSD_BUILDING);

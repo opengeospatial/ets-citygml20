@@ -132,9 +132,11 @@ public class CommonFixture {
             Map<String, String> qryParams, MediaType... mediaTypes) {
         return ClientUtils.buildGetRequest(endpoint, qryParams, mediaTypes);
     }
-	
+
 	/**
+	 * Transform XML Document to UTF-8 String
 	 * @param xmlDoc
+	 * @return
 	 * @throws Exception
 	 */
 	public String TransformXMLDocumentToXMLString(Document xmlDoc) throws Exception {
@@ -145,8 +147,9 @@ public class CommonFixture {
 		tf.transform(new DOMSource(xmlDoc), new StreamResult(out));
 		return out.toString();
 	}
-    
-    /**
+
+	/**
+	 * Document to String then Print
 	 * @param xmlDoc
 	 * @throws Exception
 	 */
@@ -159,7 +162,7 @@ public class CommonFixture {
 	 * Description: Identify that a XML document is valid with XSD Template or not
 	 * 
 	 * @param xmlString
-	 * @param xsdPath
+	 * @param arrXsdPath
 	 * @return
 	 */
 	public boolean isMultipleXMLSchemaValid(String xmlString, String[] arrXsdPath) {
