@@ -27,5 +27,7 @@ public class Namespaces {
     /** Schematron (ISO 19757-3) namespace */
     public static final URI SCH = URI
             .create("http://purl.oclc.org/dsdl/schematron");
+    /** CityGML 2.0 Appearance namespace */
+    public static final String APP = "http://www.opengis.net/citygml/appearance/2.0";
 
 }

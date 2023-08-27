@@ -60,10 +60,11 @@ public class CommonFixture {
     protected ClientResponse response;
 
 	protected Document testSubject;
+
 	/**
 	 * Define XSD path
 	 */
-	protected static final String REFINTERGRITY_SCH = "/org/opengis/cite/citygml20/sch/referentialIntegrity.sch";
+	protected static final String REFINTERGRITY_SCH = "sch/referentialIntegrity.sch";
 	protected static final String XSD_APPEARANCE = "xsd/opengis/citygml/appearance/2.0/appearance.xsd";
 	protected static final String XSD_BRIDGE = "xsd/opengis/citygml/bridge/2.0/bridge.xsd";
 	protected static final String XSD_BUILDING = "xsd/opengis/citygml/building/2.0/building.xsd";
@@ -135,9 +136,9 @@ public class CommonFixture {
 
 	/**
 	 * Transform XML Document to UTF-8 String
-	 * @param xmlDoc
-	 * @return
-	 * @throws Exception
+	 * @param xmlDoc The XML Document
+	 * @return A String data type of XML Document
+	 * @throws Exception TransformerConfigurationException, TransformerException
 	 */
 	public String TransformXMLDocumentToXMLString(Document xmlDoc) throws Exception {
 		Transformer tf = TransformerFactory.newInstance().newTransformer();
@@ -148,22 +149,12 @@ public class CommonFixture {
 		return out.toString();
 	}
 
-	/**
-	 * Document to String then Print
-	 * @param xmlDoc
-	 * @throws Exception
-	 */
-	public void prettyPrint(Document xmlDoc) throws Exception {
-		String str = TransformXMLDocumentToXMLString(xmlDoc);
-		System.out.println(str);
-	}
 	
 	/**
 	 * Description: Identify that a XML document is valid with XSD Template or not
-	 * 
-	 * @param xmlString
-	 * @param arrXsdPath
-	 * @return
+	 * @param xmlString The XML String
+	 * @param arrXsdPath A String Array of XSD Path
+	 * @return A boolean value indicates whether the XML document is valid with XSD Template or not
 	 */
 	public boolean isMultipleXMLSchemaValid(String xmlString, String[] arrXsdPath) {
 		try {
@@ -181,6 +172,7 @@ public class CommonFixture {
 	protected ArrayList<String> GetToValidateXsdPathArrayList(Document doc){
 		//
 		HashMap<String, String> hashMap = new LinkedHashMap<String, String>();
+		hashMap.put(CoreModule.v2_0_0.getNamespaceURI(), "xsd/opengis/citygml/2.0/cityGMLBase.xsd");
 		hashMap.put(AppearanceModule.v2_0_0.getNamespaceURI() , "xsd/opengis/citygml/appearance/2.0/appearance.xsd");
 		hashMap.put(BridgeModule.v2_0_0.getNamespaceURI(), "xsd/opengis/citygml/bridge/2.0/bridge.xsd");
 		hashMap.put(BuildingModule.v2_0_0.getNamespaceURI(), "xsd/opengis/citygml/building/2.0/building.xsd");

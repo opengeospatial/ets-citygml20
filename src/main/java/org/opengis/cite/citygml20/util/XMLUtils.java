@@ -22,10 +22,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
+import javax.xml.xpath.*;
 
 import net.sf.saxon.s9api.DOMDestination;
 import net.sf.saxon.s9api.DocumentBuilder;
@@ -42,6 +39,7 @@ import net.sf.saxon.s9api.XsltCompiler;
 import net.sf.saxon.s9api.XsltExecutable;
 import net.sf.saxon.s9api.XsltTransformer;
 
+import org.opengis.cite.citygml20.citygmlmodule.CityGMLNameSpaceResolver;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -405,15 +403,6 @@ public class XMLUtils {
         return nodes;
     }
 
-
-    /**
-     * Get all attribute values with namespace, tag name, attribute name
-     * @param doc
-     * @param ns
-     * @param tagName
-     * @param attrName
-     * @return ArrayList
-     */
     public static ArrayList<String> getAttributeValue(Document doc, String ns, String tagName, String attrName) {
         /** Example
          * <app:textureCoordinates ring="#fLeftExt1">
@@ -439,4 +428,26 @@ public class XMLUtils {
         }
         return resultArrayList;
     }
+
+    /**
+     * Return a NodeList of all Element nodes that match the XPath expression
+     * @param doc Document of XML Source
+     * @param expression XPath expression
+     * @return NodeList of Element nodes that match the XPath expression
+     */
+    public static NodeList getNodeListByXPath(Document doc, String expression) {
+        NodeList nodes = null;
+        try {
+            XPathFactory xpathfactory = XPathFactory.newInstance();
+            XPath xpath = xpathfactory.newXPath();
+            // Using a custom namespace resolver (CityGMLNameSpaceResolver)
+            xpath.setNamespaceContext(new CityGMLNameSpaceResolver(doc));
+            nodes = (NodeList) xpath.evaluate(expression, doc, XPathConstants.NODESET);
+        } catch (Exception exception) {
+            System.out.println("Exception: " + exception.getMessage());
+        } finally {
+            return nodes;
+        }
+    }
+
 }

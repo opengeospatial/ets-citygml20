@@ -1,37 +1,19 @@
 package org.opengis.cite.citygml20.core;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-
-import org.citygml4j.model.citygml.cityobjectgroup.CityObjectGroup;
-import org.citygml4j.model.module.citygml.AppearanceModule;
-import org.citygml4j.model.module.citygml.BridgeModule;
-import org.citygml4j.model.module.citygml.BuildingModule;
-import org.citygml4j.model.module.citygml.CityFurnitureModule;
-import org.citygml4j.model.module.citygml.CityObjectGroupModule;
-import org.citygml4j.model.module.citygml.GenericsModule;
-import org.citygml4j.model.module.citygml.LandUseModule;
-import org.citygml4j.model.module.citygml.ReliefModule;
-import org.citygml4j.model.module.citygml.TexturedSurfaceModule;
-import org.citygml4j.model.module.citygml.TransportationModule;
-import org.citygml4j.model.module.citygml.TunnelModule;
-import org.citygml4j.model.module.citygml.VegetationModule;
-import org.citygml4j.model.module.citygml.WaterBodyModule;
 import org.opengis.cite.citygml20.CommonFixture;
-import org.opengis.cite.citygml20.SuiteAttribute;
 import org.testng.Assert;
-import org.testng.ITestContext;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.util.ArrayList;
+
 public class CoreValidation extends CommonFixture{
-    @Test(description = "B.1.1 Valid CityGML instance document")
+	/**
+	 * B.1.1 Verify the validity of the CityGML instance document against the XML Schema definition of each CityGML module that is part of the CityGML profile employed by the instance document. This may be any combination of CityGML extension modules in conjunction with the CityGML core module.
+	 * @throws Exception TransformerConfigurationException
+	 */
+	@Test(description = "B.1.1 Valid CityGML instance document")
     public void verifyCityGMLinstanceDoc() throws Exception {
     	ArrayList<String> arrayList = GetToValidateXsdPathArrayList(this.testSubject);
     	//cityGMLBase.xsd
@@ -49,7 +31,7 @@ public class CoreValidation extends CommonFixture{
      * B.1.4 Verify that all spatial geometry objects within a CityGML instance document adhere to the
 XML Schema definition of the Geography Markup Language version 3.1.1 and to the
 CityGML spatial model.
-     * 
+     * @throws Exception TransformerConfigurationException
      */
     @Test(description = "B.1.4 Spatial geometry objects")
     public void verifySpatialGeometryObjects() throws Exception {
@@ -65,7 +47,7 @@ CityGML spatial model.
     /**
      * B.1.5 Verify that all spatial topology relations between spatial geometry objects are expressed
 using the XML concept of XLinks provided by GML version 3.1.1.
-
+	 * @throws Exception TransformerConfigurationException
      * 
      */
     @Test(description = "B.1.5 Spatial topology relations")
@@ -113,7 +95,7 @@ using the XML concept of XLinks provided by GML version 3.1.1.
      * B.1.6 Verify that all thematic objects representing address information within a CityGML instance 
 document adhere to the XML Schema definition of the Extensible Address Language (xAL) 
 issued by OASIS and to the rules for representing address information in CityGML.
-     * 
+     * @throws Exception TransformerConfigurationException
      */
     @Test(description = "B.1.6 Valid Address objects")
     public void verifyAddressObject() throws Exception {
