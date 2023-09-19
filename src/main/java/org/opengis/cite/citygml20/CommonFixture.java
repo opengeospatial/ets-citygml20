@@ -70,6 +70,7 @@ public class CommonFixture {
 	protected static final String XSD_BUILDING = "xsd/opengis/citygml/building/2.0/building.xsd";
 	protected static final String XSD_CITYFURNITURE = "xsd/opengis/citygml/cityfurniture/2.0/cityFurniture.xsd";
 	protected static final String XSD_CITYGMLCORE = "xsd/opengis/citygml/2.0/cityGMLBase.xsd";
+	protected static final String XSD_CITYOBJECTGROUP = "xsd/opengis/citygml/cityobjectgroup/2.0/cityObjectGroup.xsd";
 
     /**
      * Initializes the common test fixture with a client component for 
