@@ -132,6 +132,40 @@ public class ModuleValidation extends CommonFixture {
     }
 
     /**
+     * Verify that the CityGML instance document follows the CityObjectGroup module’s rules for encoding of objects and properties and adheres to all its conformance requirements. This test case is mandatory for all CityGML instance documents employing elements defined within the CityObjectGroup module. Conformance requirements on referential integrity of CityGML property elements defined within the CityObjectGroup module may be additional- ly validated using the constraints provided by the Schematron schema referentialIntegri- ty.sch in accordance with the rules and guidelines stated in annex A.15.
+     * @throws Exception
+     */
+    @Test(enabled = true, description = "B.2.6 CityObjectGroup module")
+    public void verifyCityObjectGroupModule() throws Exception {
+        String moduleName = "CityObjectGroup";
+        String SchemaPath = XSD_CITYOBJECTGROUP;
+
+        if (!docNameSpace.contains(SchemaPath))
+            throw new SkipException("Not " + moduleName + " module.");
+
+        //TODO: implement "No cyclic groupings shall be included within a CityGML instance document."
+
+    }
+
+    @Test(enabled = true, description = "B.2.7 Generics module")
+    public void verifyGenericsModule() throws Exception {
+        String moduleName = "Generics";
+        String SchemaPath = XSD_GENERICS;
+
+        if (!docNameSpace.contains(SchemaPath))
+            throw new SkipException("Not " + moduleName + " module.");
+    }
+
+    @Test(enabled = true, description = "B.2.8 LandUse module")
+    public void verifyLandUseModule() throws Exception {
+        String moduleName = "LandUse";
+        String SchemaPath = XSD_LANDUSE;
+
+        if (!docNameSpace.contains(SchemaPath))
+            throw new SkipException("Not " + moduleName + " module.");
+    }
+
+    /**
      * Verify that the CityGML instance document are follow the Mandatory conformance requirements
      * by the XML Schema Definition that contain in namespace reference itself
      * <br><br>
