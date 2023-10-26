@@ -7,14 +7,17 @@ import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
-import java.net.URL;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
 
+import java.net.URL;
 import java.util.*;
 
 public class ModuleValidation extends CommonFixture {
@@ -35,7 +38,6 @@ public class ModuleValidation extends CommonFixture {
 
         if (!docNameSpace.contains(SchemaPath))
             throw new SkipException("Not " + moduleName + " module.");
-
     }
 
     /**
@@ -92,7 +94,7 @@ public class ModuleValidation extends CommonFixture {
     }
 
     /**
-     * Verify that the CityGML instance document follows the Bridge module’s rules for encoding of objects and properties and adheres to all its conformance requirements. This test case is mandatory for all CityGML instance documents employing elements defined within the Bridge module. Conformance requirements on referential integrity of CityGML property elements defined within the Bridge module may be additionally validated using the con- straints provided by the Schematron schema referentialIntegrity.sch in accordance with the rules and guidelines stated in annex A.15.
+     * Verify that the CityGML instance document follows the Bridge module’s rules for encoding of objects and properties and adheres to all its conformance requirements. This test case is mandatory for all CityGML instance documents employing elements defined within the Bridge module. Conformance requirements on referential integrity of CityGML property elements defined within the Bridge module may be additionally validated using the constraints provided by the Schematron schema referentialIntegrity.sch in accordance with the rules and guidelines stated in annex A.15.
      * @throws Exception throws by assertContainNamespaceNSchemaValid
      */
     @Test(enabled = false, description = "B.2.3 Bridge module")
@@ -119,7 +121,7 @@ public class ModuleValidation extends CommonFixture {
     }
 
     /**
-     * Verify that the CityGML instance document follows the CityFurniture module’s rules for encoding of objects and properties and adheres to all its conformance requirements. This test case is mandatory for all CityGML instance documents employing elements defined within the CityFurniture module. Conformance requirements on referential integrity of CityGML property elements defined within the CityFurniture module may be additionally validated using the constraints provided by the Schematron schema referentialIntegrity.sch in accord- ance with the rules and guidelines stated in annex A.15.
+     * Verify that the CityGML instance document follows the CityFurniture module’s rules for encoding of objects and properties and adheres to all its conformance requirements. This test case is mandatory for all CityGML instance documents employing elements defined within the CityFurniture module. Conformance requirements on referential integrity of CityGML property elements defined within the CityFurniture module may be additionally validated using the constraints provided by the Schematron schema referentialIntegrity.sch in accordance with the rules and guidelines stated in annex A.15.
      * @throws Exception
      */
     @Test(enabled = true, description = "B.2.5 CityFurniture module")
@@ -132,7 +134,7 @@ public class ModuleValidation extends CommonFixture {
     }
 
     /**
-     * Verify that the CityGML instance document follows the CityObjectGroup module’s rules for encoding of objects and properties and adheres to all its conformance requirements. This test case is mandatory for all CityGML instance documents employing elements defined within the CityObjectGroup module. Conformance requirements on referential integrity of CityGML property elements defined within the CityObjectGroup module may be additional- ly validated using the constraints provided by the Schematron schema referentialIntegri- ty.sch in accordance with the rules and guidelines stated in annex A.15.
+     * Verify that the CityGML instance document follows the CityObjectGroup module’s rules for encoding of objects and properties and adheres to all its conformance requirements. This test case is mandatory for all CityGML instance documents employing elements defined within the CityObjectGroup module. Conformance requirements on referential integrity of CityGML property elements defined within the CityObjectGroup module may be additionally validated using the constraints provided by the Schematron schema referentialIntegrity.sch in accordance with the rules and guidelines stated in annex A.15.
      * @throws Exception
      */
     @Test(enabled = true, description = "B.2.6 CityObjectGroup module")
@@ -144,9 +146,46 @@ public class ModuleValidation extends CommonFixture {
             throw new SkipException("Not " + moduleName + " module.");
 
         //TODO: implement "No cyclic groupings shall be included within a CityGML instance document."
+        XPathFactory factory = XMLUtils.initXPathFactory();
+        XPath xpath = factory.newXPath();
+        String cityObjectGroupExpression = "//cityObjectMember/CityObjectGroup[@gml:id]";
 
+        NodeList cityObjectGroupNodes = (NodeList) xpath.evaluate(cityObjectGroupExpression, this.testSubject, XPathConstants.NODESET);
+
+        for (int i = 0; i < cityObjectGroupNodes.getLength(); i++) {
+            Node cityObjectGroupNode = cityObjectGroupNodes.item(i);
+            Element currentGroupElement = (Element) cityObjectGroupNode;
+            String currentGroupId = currentGroupElement.getAttribute("gml:id");
+
+            NodeList childGroupList = currentGroupElement.getElementsByTagName("CityObjectGroup");
+
+            for (int j = 0; j < childGroupList.getLength(); j++) {
+                Element childGroupElement = (Element) childGroupList.item(0);
+                String childGroupId = childGroupElement.getAttribute("gml:id");
+
+                String matchingGroupExpression = "//cityObjectMember/CityObjectGroup[@gml:id='" + childGroupId + "']";
+                Node matchingGroupNode = (Node) xpath.evaluate(matchingGroupExpression, this.testSubject, XPathConstants.NODE);
+
+                if (matchingGroupNode != null) {
+                    Element matchingGroupElement = (Element) matchingGroupNode;
+                    NodeList matchedGroupList = matchingGroupElement.getElementsByTagName("CityObjectGroup");
+
+                    for (int k = 0; k < matchedGroupList.getLength(); k++) {
+                        Element matchedGroupElement = (Element) matchedGroupList.item(k);
+
+                        if (matchedGroupElement.getAttribute("gml:id").equals(currentGroupId)) {
+                            System.out.println("Cycling");
+                        }
+                    }
+                }
+            }
+        }
     }
 
+    /**
+     * Verify that the CityGML instance document follows the Generics module’s rules for encoding of objects and properties and adheres to all its conformance requirements. This test case is mandatory for all CityGML instance documents employing elements defined within the Generics module. Conformance requirements on referential integrity of CityGML property elements defined within the Generics module may be additionally validated using the constraints provided by the Schematron schema referentialIntegrity.sch in accordance with the rules and guidelines stated in annex A.15.
+     * @throws Exception
+     */
     @Test(enabled = true, description = "B.2.7 Generics module")
     public void verifyGenericsModule() throws Exception {
         String moduleName = "Generics";
@@ -156,6 +195,10 @@ public class ModuleValidation extends CommonFixture {
             throw new SkipException("Not " + moduleName + " module.");
     }
 
+    /**
+     * Verify that the CityGML instance document follows the LandUse module’s rules for encoding of objects and properties and adheres to all its conformance requirements. This test case is mandatory for all CityGML instance documents employing elements defined within the LandUse module. Conformance requirements on referential integrity of CityGML property elements defined within the LandUse module may be additionally validated using the constraints provided by the Schematron schema referentialIntegrity.sch in accordance with the rules and guidelines stated in annex A.15.
+     * @throws Exception
+     */
     @Test(enabled = true, description = "B.2.8 LandUse module")
     public void verifyLandUseModule() throws Exception {
         String moduleName = "LandUse";
@@ -166,13 +209,66 @@ public class ModuleValidation extends CommonFixture {
     }
 
     /**
+     * Verify that the CityGML instance document follows the Relief module’s rules for encoding of objects and properties and adheres to all its conformance requirements. This test case is mandatory for all CityGML instance documents employing elements defined within the Relief module. Conformance requirements on referential integrity of CityGML property elements defined within the Relief module may be additionally validated using the constraints provided by the Schematron schema referentialIntegrity.sch in accordance with the rules and guidelines stated in annex A.15.
+     * @throws Exception
+     */
+    @Test(enabled = true, description = "B.2.9 Relief module")
+    public void verifyReliefModule() throws Exception {
+        String moduleName = "Relief";
+        String SchemaPath = XSD_RELIF;
+
+        if (!docNameSpace.contains(SchemaPath))
+            throw new SkipException("Not " + moduleName + " module.");
+    }
+
+    /**
+     * Verify that the CityGML instance document follows the Transportation module’s rules for encoding of objects and properties and adheres to all its conformance requirements. This test case is mandatory for all CityGML instance documents employing elements defined within the Transportation module. Conformance requirements on referential integrity of CityGML property elements defined within the Transportation module may be additionally validated using the constraints provided by the Schematron schema referentialIntegrity.sch in accordance with the rules and guidelines stated in annex A.15.
+     * @throws Exception
+     */
+    @Test(enabled = true, description = "B.2.10 Transportation module")
+    public void verifyTransportationModule() throws Exception {
+        String moduleName = "Transportation";
+        String SchemaPath = XSD_TRANSPORTATION;
+
+        if (!docNameSpace.contains(SchemaPath))
+            throw new SkipException("Not " + moduleName + " module.");
+    }
+
+    /**
+     * Verify that the CityGML instance document follows the Tunnel module’s rules for encoding of objects and properties and adheres to all its conformance requirements. This test case is mandatory for all CityGML instance documents employing elements defined within the Tunnel module. Conformance requirements on referential integrity of CityGML property elements defined within the Tunnel module may be additionally validated using the constraints provided by the Schematron schema referentialIntegrity.sch in accordance with the rules and guidelines stated in annex A.15.
+     * @throws Exception
+     */
+    @Test(enabled = true, description = "B.2.11 Tunnel module")
+    public void verifyTunnelModule() throws Exception {
+        throw new SkipException("");
+    }
+
+    /**
+     * Verify that the CityGML instance document follows the Vegetation module’s rules for encoding of objects and properties and adheres to all its conformance requirements. This test case is mandatory for all CityGML instance documents employing elements defined within the Vegetation module. Conformance requirements on referential integrity of CityGML property elements defined within the Vegetation module may be additionally validated using the constraints provided by the Schematron schema referentialIntegrity.sch in accordance with the rules and guidelines stated in annex A.15.
+     * @throws Exception
+     */
+    @Test(enabled = true, description = "B.2.12 Vegetation module")
+    public void verifyVegetationModule() throws Exception {
+        throw new SkipException("");
+    }
+
+    /**
+     * Verify that the CityGML instance document follows the WaterBody module’s rules for encoding of objects and properties and adheres to all its conformance requirements. This test case is mandatory for all CityGML instance documents employing elements defined within the WaterBody module. Conformance requirements on referential integrity of CityGML property elements defined within the WaterBody module may be additionally validated using the constraints provided by the Schematron schema referentialIntegrity.sch in accordance with the rules and guidelines stated in annex A.15.
+     * @throws Exception
+     */
+    @Test(enabled = true, description = "B.2.13 WaterBody module")
+    public void verifyWaterBodyModule() throws Exception {
+        throw new SkipException("");
+    }
+
+    /**
      * Verify that the CityGML instance document are follow the Mandatory conformance requirements
      * by the XML Schema Definition that contain in namespace reference itself
      * <br><br>
      * Verify that the CityGML instance document are valid using the constraints provided by the Schematron schema referentialIntegrity.sch in accordance with the rules and guidelines stated in annex A.14.
      * @throws Exception – throws by TransformXMLDocumentToXMLString
      **/
-    @Test(enabled = true)
+    @Test(enabled = true, description = "Schematron and Schema Validation")
     public void VerifyMandatoryConformanceRequirements() throws Exception {
         String[] arrXsdPath = new String[docNameSpace.size()];
         docNameSpace.toArray(arrXsdPath);
@@ -186,7 +282,6 @@ public class ModuleValidation extends CommonFixture {
         URL schemaRef = this.getClass().getResource(ROOT_PKG_PATH + REFINTERGRITY_SCH);
         Source source = new DOMSource(this.testSubject);
         ETSAssert.assertSchematronValid(schemaRef, source, defaultPhase);
-
     }
 
 

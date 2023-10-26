@@ -55,7 +55,7 @@ public class XMLUtils {
     private static final XMLInputFactory STAX_FACTORY = initXMLInputFactory();
     private static final XPathFactory XPATH_FACTORY = initXPathFactory();
 
-    private static XPathFactory initXPathFactory() {
+    public static XPathFactory initXPathFactory() {
         XPathFactory factory = XPathFactory.newInstance();
         return factory;
     }

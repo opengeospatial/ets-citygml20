@@ -73,6 +73,11 @@ public class CommonFixture {
 	protected static final String XSD_CITYOBJECTGROUP = "xsd/opengis/citygml/cityobjectgroup/2.0/cityObjectGroup.xsd";
 	protected static final String XSD_GENERICS = "xsd/opengis/citygml/generics/2.0/generics.xsd";
 	protected static final String XSD_LANDUSE = "xsd/opengis/citygml/landuse/2.0/landUse.xsd";
+	protected static final String XSD_RELIF = "xsd/opengis/citygml/relief/2.0/relief.xsd";
+	protected static final String XSD_TRANSPORTATION = "xsd/opengis/citygml/transportation/2.0/transportation.xsd";
+	protected static final String XSD_TUNNEL = "xsd/opengis/citygml/tunnel/2.0/tunnel.xsd";
+	protected static final String XSD_VEGETATION = "xsd/opengis/citygml/vegetation/2.0/vegetation.xsd";
+	protected static final String XSD_WATERBODY = "xsd/opengis/citygml/waterBody/2.0/waterBody.xsd";
 
 
     /**
