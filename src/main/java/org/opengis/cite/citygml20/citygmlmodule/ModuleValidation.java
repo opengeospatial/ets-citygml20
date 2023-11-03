@@ -97,7 +97,7 @@ public class ModuleValidation extends CommonFixture {
      * Verify that the CityGML instance document follows the Bridge module’s rules for encoding of objects and properties and adheres to all its conformance requirements. This test case is mandatory for all CityGML instance documents employing elements defined within the Bridge module. Conformance requirements on referential integrity of CityGML property elements defined within the Bridge module may be additionally validated using the constraints provided by the Schematron schema referentialIntegrity.sch in accordance with the rules and guidelines stated in annex A.15.
      * @throws Exception throws by assertContainNamespaceNSchemaValid
      */
-    @Test(enabled = false, description = "B.2.3 Bridge module")
+    @Test(enabled = true, description = "B.2.3 Bridge module")
     public void verifyBridgeModule() throws Exception {
         String moduleName = "Bridge";
         String SchemaPath = XSD_BRIDGE;
