@@ -249,7 +249,11 @@ public class ModuleValidation extends CommonFixture {
      */
     @Test(enabled = true, description = "B.2.12 Vegetation module")
     public void verifyVegetationModule() throws Exception {
-        throw new SkipException("");
+        String moduleName = "Vegetation";
+        String SchemaPath = XSD_VEGETATION;
+
+        if (!docNameSpace.contains(SchemaPath))
+            throw new SkipException("Not " + moduleName + " module.");
     }
 
     /**
@@ -258,7 +262,30 @@ public class ModuleValidation extends CommonFixture {
      */
     @Test(enabled = true, description = "B.2.13 WaterBody module")
     public void verifyWaterBodyModule() throws Exception {
-        throw new SkipException("");
+        String moduleName = "WaterBody";
+        String SchemaPath = XSD_WATERBODY;
+
+        if (!docNameSpace.contains(SchemaPath))
+            throw new SkipException("Not " + moduleName + " module.");
+
+        boolean validParent = true;
+
+        String[] WaterBoundarySurfaceTypes = {"WaterSurface","WaterGroundSurface","WaterClosureSurface"};
+        String prefix = "//*/wtr:";
+        for (int indexType = 0; indexType < WaterBoundarySurfaceTypes.length; indexType++) {
+            String expressionPath = prefix + WaterBoundarySurfaceTypes[indexType];
+            NodeList nodes = XMLUtils.getNodeListByXPath(this.testSubject, expressionPath);
+            for (int i = 0; i < nodes.getLength(); i++) {
+                Element n = (Element) nodes.item(i);
+                Node parentNode = n.getParentNode();
+                String parentNodeName = parentNode.getNodeName();
+                if (parentNodeName != "wtr:WaterBody") {
+                    validParent = false;
+                    break;
+                }
+            }
+        }
+        Assert.assertTrue(validParent,"_WaterBoundarySurface elements shall only be included as parts of corresponding WaterBody elements.");
     }
 
     /**

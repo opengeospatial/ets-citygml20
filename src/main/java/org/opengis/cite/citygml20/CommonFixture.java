@@ -77,7 +77,7 @@ public class CommonFixture {
 	protected static final String XSD_TRANSPORTATION = "xsd/opengis/citygml/transportation/2.0/transportation.xsd";
 	protected static final String XSD_TUNNEL = "xsd/opengis/citygml/tunnel/2.0/tunnel.xsd";
 	protected static final String XSD_VEGETATION = "xsd/opengis/citygml/vegetation/2.0/vegetation.xsd";
-	protected static final String XSD_WATERBODY = "xsd/opengis/citygml/waterBody/2.0/waterBody.xsd";
+	protected static final String XSD_WATERBODY = "xsd/opengis/citygml/waterbody/2.0/waterBody.xsd";
 
 
     /**
