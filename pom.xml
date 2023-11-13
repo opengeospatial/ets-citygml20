@@ -48,7 +48,7 @@
 
   <properties>
     <ets-code>citygml20</ets-code>
-    <spec-version>1.0</spec-version>
+    <spec-version>2.0</spec-version>
     <docker.teamengine.version>5.4</docker.teamengine.version>
   </properties>
 
