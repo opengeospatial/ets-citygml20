@@ -9,6 +9,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.print.Doc;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -436,18 +437,23 @@ public class XMLUtils {
      * @return NodeList of Element nodes that match the XPath expression
      */
     public static NodeList getNodeListByXPath(Document doc, String expression) {
-        NodeList nodes = null;
         try {
             XPathFactory xpathfactory = XPathFactory.newInstance();
             XPath xpath = xpathfactory.newXPath();
             // Using a custom namespace resolver (CityGMLNameSpaceResolver)
             xpath.setNamespaceContext(new CityGMLNameSpaceResolver(doc));
-            nodes = (NodeList) xpath.evaluate(expression, doc, XPathConstants.NODESET);
+            NodeList nodes = (NodeList) xpath.evaluate(expression, doc, XPathConstants.NODESET);
+            return nodes;
         } catch (Exception exception) {
             System.out.println("Exception: " + exception.getMessage());
-        } finally {
-            return nodes;
+            return null;
         }
     }
 
+    public static XPath getXPathWithNS(Document doc) {
+        XPathFactory xpathfactory = XPathFactory.newInstance();
+        XPath xpath = xpathfactory.newXPath();
+        xpath.setNamespaceContext(new CityGMLNameSpaceResolver(doc));
+        return xpath;
+    }
 }

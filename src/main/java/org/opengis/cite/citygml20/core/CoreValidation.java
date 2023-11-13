@@ -13,7 +13,7 @@ public class CoreValidation extends CommonFixture{
 	 * B.1.1 Verify the validity of the CityGML instance document against the XML Schema definition of each CityGML module that is part of the CityGML profile employed by the instance document. This may be any combination of CityGML extension modules in conjunction with the CityGML core module.
 	 * @throws Exception TransformerConfigurationException
 	 */
-	@Test(enabled = false, description = "B.1.1 Valid CityGML instance document")
+	@Test(enabled = true, description = "B.1.1 Valid CityGML instance document")
     public void verifyCityGMLinstanceDoc() throws Exception {
     	ArrayList<String> arrayList = GetToValidateXsdPathArrayList(this.testSubject);
     	//cityGMLBase.xsd
@@ -33,7 +33,7 @@ XML Schema definition of the Geography Markup Language version 3.1.1 and to the
 CityGML spatial model.
      * @throws Exception TransformerConfigurationException
      */
-    @Test(enabled = false, description = "B.1.4 Spatial geometry objects")
+    @Test(enabled = true, description = "B.1.4 Spatial geometry objects")
     public void verifySpatialGeometryObjects() throws Exception {
     	ArrayList<String> arrayList = getValidateSpatialGeometryArrayList();
     	String[] arrXsdPath = new String[arrayList.size()];
@@ -50,7 +50,7 @@ using the XML concept of XLinks provided by GML version 3.1.1.
 	 * @throws Exception TransformerConfigurationException
      * 
      */
-    @Test(enabled = false, description = "B.1.5 Spatial topology relations")
+    @Test(enabled = true, description = "B.1.5 Spatial topology relations")
     public void verifySpatialtopologyRelations() throws Exception {
     	ArrayList<String> arrayList = getValidateSpatialGeometryArrayList();
     	arrayList.add("xsd/opengis/xlink/1.0/xlink-1.0.xsd");
@@ -97,7 +97,7 @@ document adhere to the XML Schema definition of the Extensible Address Language 
 issued by OASIS and to the rules for representing address information in CityGML.
      * @throws Exception TransformerConfigurationException
      */
-    @Test(enabled = false, description = "B.1.6 Valid Address objects")
+    @Test(enabled = true, description = "B.1.6 Valid Address objects")
     public void verifyAddressObject() throws Exception {
     	ArrayList<String> arrayList = GetToValidateXsdPathArrayList(this.testSubject);
     	//xAL.xsd
