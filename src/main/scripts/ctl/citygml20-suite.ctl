@@ -32,7 +32,7 @@
              <div style="background:#F0F8FF" bgcolor="#F0F8FF">
               <p>The implementation under test (IUT) is checked against the following specifications:</p>
               <ul>
-                <li><a href="https://www.ogc.org/standard/citygml/">CityGML 2.0</a></li>
+                <li><a href="https://portal.ogc.org/files/?artifact_id=47842">OGC City Geography Markup Language (CityGML) Encoding Standard, version 2.0 (OGC 12-019)</a></li>
               </ul>
               <p>Two conformance levels are defined:</p>
               <ul>
