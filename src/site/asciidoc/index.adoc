@@ -3,39 +3,39 @@
 == Scope
 
 This executable test suite (ETS) verifies the conformance of the implementation
-under test (IUT) with respect to the set of relevant specifications depicted in
-Figure 1. Conformance testing is a kind of "black box" testing that examines the
-externally visible characteristics or behaviors of the IUT while disregarding
+under test (IUT) with respect to the OGC City Geography Markup Language (CityGML) Encoding Standard, version 2.0. Conformance testing is a kind of "black box" testing that examines the externally visible characteristics or behaviors of the IUT while disregarding
 any implementation details.
-
-.Relevant specifications
-[caption="Figure 1: "]
-image::img/specifications.png[]
-
-
 
 Several conformance classes are defined in the principal specifications; the ones
 listed below are covered by this test suite:
 
-* Class A
-   - List capabilities of conformance class A
-* Class B
-    - List capabilities of conformance class B
+* B.1 Test cases for mandatory conformance requirements
+   - B.1.1 Valid CityGML instance document
+   - B.1.3 Conformance classes related to CityGML modules
+   - B.1.4 Spatial geometry objects
+   - B.1.5 Spatial topology relations   
+   - B.1.6 Address objects      
+* B.2 Conformance classes related to CityGML modules
+    - B.2.1 CityGML Core module
+    - B.2.2 Appearance module
+    - B.2.3 Bridge module
+    - B.2.4 Building module
+    - B.2.5 CityFurniture module
+    - B.2.6 CityObjectGroup module
+    - B.2.7 Generics module
+    - B.2.8 LandUse module
+    - B.2.9 Relief module
+    - B.2.10 Transportation module
+    - B.2.11 Tunnel module
+    - B.2.12 Vegetation module
+    - B.2.13 WaterBody module
 
 == Test requirements
 
 The documents listed below stipulate requirements that must be satisfied by a 
 conforming implementation.
 
-1. http://www.w3.org/TR/WCAG20/[Web Content Accessibility Guidelines (WCAG) 2.0]
-2. http://www.w3.org/TR/xml/[Extensible Markup Language (XML) 1.0, Fifth Edition]
-3. https://tools.ietf.org/html/rfc7231)[RFC 7231] - Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content
-
-If any of the following preconditions are not satisfied then all tests in the
-suite will be marked as skipped.
-
-1. Precondition 1
-2. Precondition 2
+1. https://portal.ogc.org/files/?artifact_id=47842[OGC City Geography Markup Language (CityGML) Encoding Standard, version 2.0 (OGC 12-019)]
 
 == Test suite structure
 
@@ -50,11 +50,52 @@ The general structure of the test suite is shown in Table 1.
 |Conformance class
 |Test classes
 
-|Conformance Level 1
-|org.opengis.cite.citygml20.level1.*
+| Core
+|org.opengis.cite.citygml20.core.*
 
-|Conformance Level 2
-|org.opengis.cite.citygml20.level2.*
+
+|Core
+|org.opengis.cite.citygml20.citygmlmodule.*
+
+
+|Core
+|org.opengis.cite.citygml20.module.CoreModuleValidation
+
+| Appearance Module
+| org.opengis.cite.citygml20.module.AppearanceModuleValidation
+
+| BuildingModuleValidation
+| org.opengis.cite.citygml20.module.BuildingModuleValidation
+  
+| BridgeModuleValidation
+| org.opengis.cite.citygml20.module.BridgeModuleValidation
+
+| CityFurnitureModuleValidation
+| org.opengis.cite.citygml20.module.CityFurnitureModuleValidation
+  
+| CityObjectGroupModuleValidation
+| org.opengis.cite.citygml20.module.CityObjectGroupModuleValidation
+  
+| GenericsModuleValidation
+| org.opengis.cite.citygml20.module.GenericsModuleValidation
+  
+| LandUseModuleValidation
+| org.opengis.cite.citygml20.module.LandUseModuleValidation
+  
+| ReliefModuleValidation
+| org.opengis.cite.citygml20.module.ReliefModuleValidation
+  
+| TransportationModuleValidation
+| org.opengis.cite.citygml20.module.TransportationModuleValidation
+  
+| TunnelModuleValidation
+| org.opengis.cite.citygml20.module.TunnelModuleValidation
+
+| VegetationModuleValidation
+| org.opengis.cite.citygml20.module.VegetationModuleValidation
+
+| WaterBodyModuleValidation
+| org.opengis.cite.citygml20.module.WaterBodyModuleValidation
 
 |===
 
@@ -80,10 +121,5 @@ The _Obligation_ descriptor can have the following values: M (mandatory), O (opt
 |URI
 |M
 |A URI that refers to the implementation under test or metadata about it. Ampersand ('&amp;') characters must be percent-encoded as '%26'.
-
-|ics
-|A comma-separated list of string values.
-|O
-|An implementation conformance statement that indicates which conformance classes or options are supported.
 
 |===
