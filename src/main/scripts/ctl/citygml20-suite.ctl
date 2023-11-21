@@ -30,45 +30,58 @@
            <ctl:form method="POST" width="800" height="600" xmlns="http://www.w3.org/1999/xhtml">
              <h2>CityGML 2.0 Conformance Test Suite</h2>
              <div style="background:#F0F8FF" bgcolor="#F0F8FF">
-               <p>The implementation under test (IUT) is checked against the following specifications:</p>
-               <ul>
-                 <li><a href="http://www.w3.org/TR/xml/">Extensible Markup Language (XML) 1.0</a>, 
-				 Fifth Edition</li>
-				 <li><a href="http://www.w3.org/TR/xmlbase/">XML Base</a>, Second Edition</li>
-               </ul>
-               <p>Two conformance levels are defined:</p>
-               <ul>
-                 <li>Level 1</li>
-                 <li>Level 2</li>
-               </ul>
+              <p>The implementation under test (IUT) is checked against the following specifications:</p>
+              <ul>
+                <li><a href="https://www.ogc.org/standard/citygml/">CityGML 2.0</a></li>
+              </ul>
+              <p>Two conformance levels are defined:</p>
+              <ul>
+                <li>B.1 Test cases for mandatory conformance requirements</li>
+                <ul>
+                   <li>B.1.1 Valid CityGML instance document</li>
+                   <li> B.1.3 Conformance classes related to CityGML modules</li>
+                   <li> B.1.4 Spatial geometry objects</li>
+                   <li> B.1.5 Spatial topology relations</li>
+                   <li> B.1.6 Address objects</li>
+                 </ul>
+                <li>B.2 Conformance classes related to CityGML modules</li>
+                <ul>
+                   <li>B.2.1 CityGML Core module</li>
+                   <li>B.2.2 Appearance module</li>
+                   <li>B.2.3 Bridge module</li>
+                   <li>B.2.4 Building module</li>
+                   <li>B.2.5 CityFurniture module</li>
+                   <li>B.2.6 CityObjectGroup module</li>
+                   <li>B.2.7 Generics module</li>
+                   <li>B.2.8 LandUse module</li>
+                   <li>B.2.9 Relief module</li>
+                   <li>B.2.10 Transportation module</li>
+                   <li>B.2.11 Tunnel module</li>
+                   <li>B.2.12 Vegetation module</li>
+                   <li>B.2.13 WaterBody module</li>
+                </ul>
+              </ul>
              </div>
              <fieldset style="background:#ccffff">
-               <legend style="font-family: sans-serif; color: #000099; 
-			                 background-color:#F0F8FF; border-style: solid; 
-                       border-width: medium; padding:4px">Implementation under test</legend>
-               <p>
-                 <label for="uri">
-                   <h4 style="margin-bottom: 0.5em">Location of IUT (absolute http: or file: URI)</h4>
-                 </label>
-                 <input id="uri" name="uri" size="128" type="text" value="http://www.w3schools.com/xml/note.xml" />
-               </p>
-               <p>
-                 <label for="doc">
-                   <h4 style="margin-bottom: 0.5em">Upload IUT</h4>
-                 </label>
-                 <input name="doc" id="doc" size="128" type="file" />
-               </p>
-               <p>
-                 <label for="level">Conformance class: </label>
-                 <input id="level-1" type="radio" name="level" value="1" checked="checked" />
-                 <label for="level-1"> Level 1 | </label>
-                 <input id="level-2" type="radio" name="level" value="2" />
-                 <label class="form-label" for="level-2"> Level 2</label>
-               </p>
+              <legend style="font-family: sans-serif; color: #000099;
+                      background-color:#F0F8FF; border-style: solid;
+                      border-width: medium; padding:4px">Implementation under test</legend>
+              <p>
+                <label for="uri">
+                  <h4 style="margin-bottom: 0.5em">Location of IUT (absolute http: or file: URI)</h4>
+                </label>
+                <input id="uri" name="uri" size="128" type="text" value="" />
+              </p>
+              <p>
+                <label for="doc">
+                  <h4 style="margin-bottom: 0.5em">Upload IUT</h4>
+                </label>
+                <input name="doc" id="doc" size="128" type="file" />
+              </p>
              </fieldset>
              <p>
-               <input class="form-button" type="submit" value="Start"/> | 
-               <input class="form-button" type="reset" value="Clear"/>
+              <input class="form-button" type="submit" value="Start"/> |
+              <input class="form-button" type="reset" value="Clear"/>
              </p>
            </ctl:form>
         </xsl:variable>

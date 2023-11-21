@@ -77,6 +77,8 @@ public class TestNGController implements TestSuiteController {
         TestNGController controller = new TestNGController(testRunArgs.getOutputDir());
         Source testResults = controller.doTestRun(testRunProps);
         System.out.println("Test results: " + testResults.getSystemId());
+        String filename = testResults.getSystemId().replace("file:","");
+        Process p = Runtime.getRuntime().exec("open " + filename);
     }
 
     /**

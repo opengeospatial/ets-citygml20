@@ -5,13 +5,11 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.print.Doc;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -25,10 +23,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
+import javax.xml.xpath.*;
 
 import net.sf.saxon.s9api.DOMDestination;
 import net.sf.saxon.s9api.DocumentBuilder;
@@ -45,6 +40,7 @@ import net.sf.saxon.s9api.XsltCompiler;
 import net.sf.saxon.s9api.XsltExecutable;
 import net.sf.saxon.s9api.XsltTransformer;
 
+import org.opengis.cite.citygml20.citygmlmodule.CityGMLNameSpaceResolver;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -60,7 +56,7 @@ public class XMLUtils {
     private static final XMLInputFactory STAX_FACTORY = initXMLInputFactory();
     private static final XPathFactory XPATH_FACTORY = initXPathFactory();
 
-    private static XPathFactory initXPathFactory() {
+    public static XPathFactory initXPathFactory() {
         XPathFactory factory = XPathFactory.newInstance();
         return factory;
     }
@@ -406,5 +402,58 @@ public class XMLUtils {
             nodes.add(nodeList.item(i));
         }
         return nodes;
+    }
+
+    public static ArrayList<String> getAttributeValue(Document doc, String ns, String tagName, String attrName) {
+        /** Example
+         * <app:textureCoordinates ring="#fLeftExt1">
+         *     ns: app's namespace uri,
+         *     tagName: "textureCoordinates",
+         *     attrName:"ring"
+         */
+        ArrayList<String> resultArrayList = new ArrayList<>();
+        NodeList nodeList = doc.getElementsByTagName("*");
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            if (!Objects.equals(node.getNamespaceURI(), ns))
+                continue;
+            Element ni = (Element) nodeList.item(i);
+            NodeList tagNameItems = ni.getElementsByTagNameNS(ns,tagName);
+            if (tagNameItems.getLength() > 0) {
+                for (int j = 0; j < tagNameItems.getLength(); j++) {
+                    Element tagNameItem = (Element) tagNameItems.item(j);
+                    if (tagNameItem.hasAttribute(attrName))
+                        resultArrayList.add(tagNameItem.getAttribute(attrName));
+                }
+            }
+        }
+        return resultArrayList;
+    }
+
+    /**
+     * Return a NodeList of all Element nodes that match the XPath expression
+     * @param doc Document of XML Source
+     * @param expression XPath expression
+     * @return NodeList of Element nodes that match the XPath expression
+     */
+    public static NodeList getNodeListByXPath(Document doc, String expression) {
+        try {
+            XPathFactory xpathfactory = XPathFactory.newInstance();
+            XPath xpath = xpathfactory.newXPath();
+            // Using a custom namespace resolver (CityGMLNameSpaceResolver)
+            xpath.setNamespaceContext(new CityGMLNameSpaceResolver(doc));
+            NodeList nodes = (NodeList) xpath.evaluate(expression, doc, XPathConstants.NODESET);
+            return nodes;
+        } catch (Exception exception) {
+            System.out.println("Exception: " + exception.getMessage());
+            return null;
+        }
+    }
+
+    public static XPath getXPathWithNS(Document doc) {
+        XPathFactory xpathfactory = XPathFactory.newInstance();
+        XPath xpath = xpathfactory.newXPath();
+        xpath.setNamespaceContext(new CityGMLNameSpaceResolver(doc));
+        return xpath;
     }
 }

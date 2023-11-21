@@ -10,13 +10,85 @@
     <listener class-name="org.opengis.cite.citygml20.TestFailureListener" />
   </listeners>
 
-  <test name="Conformance Level 1">
+  <test name="Core">
     <packages>
-      <package name="org.opengis.cite.citygml20.level1" />
+      <package name="org.opengis.cite.citygml20.core" />
+      <package name="org.opengis.cite.citygml20.citygmlmodule" />
     </packages>
-    <classes>
-      <class name="org.opengis.cite.citygml20.SuitePreconditions" />
-    </classes>
-  </test>
-  <!-- Add test sets for other conformance classes/levels -->
+
+        <classes>
+            <class name="org.opengis.cite.citygml20.module.CoreModuleValidation"></class>
+        </classes>
+  </test>  
+  <test name="CityGMLAppearanceModuleValidation">
+        <classes>
+            <class name="org.opengis.cite.citygml20.module.AppearanceModuleValidation"></class>
+        </classes>
+  </test>     
+  <test name="CityGMLBuildingModuleValidation">
+        <classes>
+            <class name="org.opengis.cite.citygml20.module.BuildingModuleValidation"></class>
+        </classes>
+  </test>  
+  
+  <test name="CityGMLBridgeModuleValidation">
+        <classes>
+            <class name="org.opengis.cite.citygml20.module.BridgeModuleValidation"></class>
+        </classes>
+  </test>    
+  
+  <test name="CityGMLCityFurnitureModuleValidation">
+        <classes>
+            <class name="org.opengis.cite.citygml20.module.CityFurnitureModuleValidation"></class>
+        </classes>
+  </test>   
+  
+  <test name="CityGMLCityObjectGroupModuleValidation">
+        <classes>
+            <class name="org.opengis.cite.citygml20.module.CityObjectGroupModuleValidation"></class>
+        </classes>
+  </test>   
+  
+  <test name="CityGMLGenericsModuleValidation">
+        <classes>
+            <class name="org.opengis.cite.citygml20.module.GenericsModuleValidation"></class>
+        </classes>
+  </test>     
+  
+  <test name="CityGMLLandUseModuleValidation">
+        <classes>
+            <class name="org.opengis.cite.citygml20.module.LandUseModuleValidation"></class>
+        </classes>
+  </test>    
+  
+  <test name="CityGMLReliefModuleValidation">
+        <classes>
+            <class name="org.opengis.cite.citygml20.module.ReliefModuleValidation"></class>
+        </classes>
+  </test>    
+  
+  <test name="CityGMLTransportationModuleValidation">
+        <classes>
+            <class name="org.opengis.cite.citygml20.module.TransportationModuleValidation"></class>
+        </classes>
+  </test>   
+  
+  <test name="CityGMLTunnelModuleValidation">
+        <classes>
+            <class name="org.opengis.cite.citygml20.module.TunnelModuleValidation"></class>
+        </classes>
+  </test>   
+
+  <test name="CityGMLVegetationModuleValidation">
+        <classes>
+            <class name="org.opengis.cite.citygml20.module.VegetationModuleValidation"></class>
+        </classes>
+  </test>   
+
+  <test name="CityGMLWaterBodyModuleValidation">
+        <classes>
+            <class name="org.opengis.cite.citygml20.module.WaterBodyModuleValidation"></class>
+        </classes>
+  </test>   
+
 </suite>

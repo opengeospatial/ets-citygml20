@@ -48,11 +48,16 @@
 
   <properties>
     <ets-code>citygml20</ets-code>
-    <spec-version>1.0</spec-version>
+    <spec-version>2.0</spec-version>
     <docker.teamengine.version>5.4</docker.teamengine.version>
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xercesImpl</artifactId>
+      <version>2.12.2</version>
+    </dependency>
     <dependency>
       <groupId>org.opengis.cite.teamengine</groupId>
       <artifactId>teamengine-spi</artifactId>
@@ -73,9 +78,20 @@
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
     </dependency>
+    <dependency>
+	  <groupId>org.citygml4j</groupId>
+	  <artifactId>citygml4j</artifactId>
+	  <version>2.12.2</version>
+	</dependency>
   </dependencies>
 
   <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -178,7 +194,8 @@
         <plugin>
           <groupId>io.fabric8</groupId>
           <artifactId>docker-maven-plugin</artifactId>
-          <version>0.28.0</version>
+          <!--<version>0.28.0</version>-->
+          <version>0.30.0</version>
           <configuration>
             <images>
               <image>
