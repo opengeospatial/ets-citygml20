@@ -70,7 +70,7 @@
                 <label for="uri">
                   <h4 style="margin-bottom: 0.5em">Location of IUT (absolute http: or file: URI)</h4>
                 </label>
-                <input id="uri" name="uri" size="128" type="text" value="http://www.w3schools.com/xml/note.xml" />
+                <input id="uri" name="uri" size="128" type="text" value="" />
               </p>
               <p>
                 <label for="doc">
