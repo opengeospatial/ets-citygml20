@@ -17,7 +17,7 @@
     </ctl:code>
 	</ctl:function>
 
-   <ctl:suite name="tns:ets-citygml20-${version}">
+   <ctl:suite name="tns:ets-${ets-code}-${version}">
      <ctl:title>CityGML 2.0 Conformance Test Suite</ctl:title>
      <ctl:description>Describe scope of testing.</ctl:description>
      <ctl:starting-test>tns:Main</ctl:starting-test>
