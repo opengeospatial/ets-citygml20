@@ -1,6 +1,7 @@
 = Release Notes
 
-== 0.1 (2023-11-21)
+== 0.1 (2023-11-27)
+* https://github.com/opengeospatial/ets-citygml20/pull/25[#25] Fix that version of test suite and basic conformance classes are displayed in HTML report and refactorings
 * https://github.com/opengeospatial/ets-citygml20/issues/21[#21] Separate optional conformance classes into separate packages
 * https://github.com/opengeospatial/ets-citygml20/issues/20[#20] Create documentation
 * https://github.com/opengeospatial/ets-citygml20/issues/19[#19] Solve test failures
