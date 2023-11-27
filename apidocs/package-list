@@ -1,0 +1,5 @@
+org.opengis.cite.citygml20
+org.opengis.cite.citygml20.citygmlmodule
+org.opengis.cite.citygml20.core
+org.opengis.cite.citygml20.module
+org.opengis.cite.citygml20.util
