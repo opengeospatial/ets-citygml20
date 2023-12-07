@@ -65,7 +65,6 @@ public class SuiteFixtureListener implements ISuiteListener {
         File entityFile = null;
         try {
             entityFile = URIUtils.dereferenceURI(iutRef);
-            System.out.println("Test Subject: " + iutRef.toString());
         } catch (IOException iox) {
             throw new RuntimeException("Failed to dereference resource located at " + iutRef, iox);
         }

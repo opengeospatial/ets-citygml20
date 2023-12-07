@@ -71,13 +71,13 @@ using the XML concept of XLinks provided by GML version 3.1.1.
             if (geometryElement.hasAttributeNS("http://www.opengis.net/gml", "id")) {
             	String id = geometryElement.getAttributeNS("http://www.opengis.net/gml", "id");
             	idArrayList.add(id);
-            	System.out.println("id:" + id);
+            
             }
 
             if (geometryElement.hasAttributeNS("http://www.w3.org/1999/xlink", "href")) {
             	String hrefId = geometryElement.getAttributeNS("http://www.w3.org/1999/xlink", "href");
             	hrefArrayList.add(hrefId);
-            	System.out.println("hrefId:" + hrefId);
+            	
             }
             
         }
