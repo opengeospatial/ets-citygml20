@@ -1,5 +1,6 @@
 package org.opengis.cite.citygml20.module;
 
+import org.apache.xerces.dom.DeferredElementNSImpl;
 import org.opengis.cite.citygml20.CommonFixture;
 import org.opengis.cite.citygml20.ETSAssert;
 import org.opengis.cite.citygml20.util.XMLUtils;
@@ -32,11 +33,38 @@ public class LandUseModuleValidation extends CommonFixture {
      */
     @Test(enabled = true, description = "B.2.8 LandUse module")
     public void verifyLandUseModule() {
-        String moduleName = "LandUse";
         String SchemaPath = XSD_LANDUSE;
+        String moduleName = "LandUse";
+        String moduleElementName = moduleName;
+       
+     	NodeList rootElementList = this.testSubject.getChildNodes();
+		
+   		boolean foundAtLeastOne = false;
+   		
+   		for(int a=0; a<rootElementList.getLength(); a++)
+   		{
+   			
+   			if(rootElementList.item(a).getClass().toString().equals("class org.apache.xerces.dom.DeferredElementNSImpl"))
+   			{
+   				DeferredElementNSImpl element = (DeferredElementNSImpl) rootElementList.item(a);
+   				
+   				if( element.getLocalName().equals("CityModel") &&
+   					element.getNamespaceURI().equals("http://www.opengis.net/citygml/2.0"))
+   		    	{
+   				
+   					NodeList nodeList = element.getElementsByTagNameNS("http://www.opengis.net/citygml/"+moduleName.toLowerCase()+"/2.0", moduleElementName);
+   					if(nodeList.getLength()>0) {
+   						foundAtLeastOne = true;
+   				
+   					}
+   		    	}
+   				
+   			}
+   			
+   		}
+   		
+   		Assert.assertTrue(foundAtLeastOne,"No "+moduleElementName+" element was found in the document.");
 
-        if (!docNameSpace.contains(SchemaPath))
-            throw new SkipException("Not " + moduleName + " module.");
     }
 
   
