@@ -37,33 +37,50 @@ public class BuildingModuleValidation extends CommonFixture {
      */
     @Test(enabled = true, description = "B.2.4 Building module - Clause 10.3.9 Base Requirement 1")
     public void verifyBuildingModule() {
-      	NodeList rootElementList = this.testSubject.getChildNodes();
-		
-    		boolean foundAtLeastOneBuilding = false;
+            String SchemaPath = XSD_BUILDING;
+    	    String moduleName = "Building";
+        	String[] moduleElementNameList = {"Building","BuildingInstallation","IntBuildingInstallation","BuildingFurniture","Room","BuildingPart"};
+        	StringBuffer sb = new StringBuffer();
+        	for(int s=0; s < moduleElementNameList.length; s++)
+        	{
+        		sb.append(moduleElementNameList[s]);
+        		if(s < (moduleElementNameList.length-1)) {
+        			sb.append(", ");
+        		}
+        		else {
+        			sb.append(" ");
+        		}
+        	}
+        	
+        	
+          	NodeList rootElementList = this.testSubject.getChildNodes();
     		
-    		for(int a=0; a<rootElementList.getLength(); a++)
-    		{
-    			
-    			if(rootElementList.item(a).getClass().toString().equals("class org.apache.xerces.dom.DeferredElementNSImpl"))
-    			{
-    				DeferredElementNSImpl element = (DeferredElementNSImpl) rootElementList.item(a);
-    				
-    				if( element.getNodeName().equals("CityModel") &&
-    					element.getNamespaceURI().equals("http://www.opengis.net/citygml/2.0"))
-    		    	{
-    				
-    					NodeList buildingList = element.getElementsByTagNameNS("http://www.opengis.net/citygml/building/2.0","Building");
-    					if(buildingList.getLength()>0) {
-    						foundAtLeastOneBuilding = true;
-    				
-    					}
-    		    	}
-    				
-    			}
-    			
-    		}
-    		
-    		Assert.assertTrue(foundAtLeastOneBuilding,"Expected to find at least one Building element in the document but none was found.");
+        		boolean foundAtLeastOne = false;
+        		
+        		for(int a=0; a<rootElementList.getLength(); a++)
+        		{
+        			
+        			if(rootElementList.item(a).getClass().toString().equals("class org.apache.xerces.dom.DeferredElementNSImpl"))
+        			{
+        				DeferredElementNSImpl element = (DeferredElementNSImpl) rootElementList.item(a);
+        				
+        				if( element.getLocalName().equals("CityModel") &&
+        					element.getNamespaceURI().equals("http://www.opengis.net/citygml/2.0"))
+        		    	{
+        				  for(int b = 0 ; b< moduleElementNameList.length; b++) {
+        					NodeList nodeList = element.getElementsByTagNameNS("http://www.opengis.net/citygml/"+moduleName.toLowerCase()+"/2.0", moduleElementNameList[b]);    				
+        					if(nodeList.getLength()>0) {
+        						foundAtLeastOne = true;
+        				
+        					}
+        		    	 }
+        		    	}
+        				
+        			}
+        			
+        		}
+        		
+        		Assert.assertTrue(foundAtLeastOne,"None of "+sb.toString()+" elements was found in the document.");
 
             
     }    

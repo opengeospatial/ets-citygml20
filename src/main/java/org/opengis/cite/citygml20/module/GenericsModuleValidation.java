@@ -1,5 +1,6 @@
 package org.opengis.cite.citygml20.module;
 
+import org.apache.xerces.dom.DeferredElementNSImpl;
 import org.opengis.cite.citygml20.CommonFixture;
 import org.opengis.cite.citygml20.ETSAssert;
 import org.opengis.cite.citygml20.util.XMLUtils;
@@ -37,10 +38,50 @@ public class GenericsModuleValidation extends CommonFixture {
     public void verifyGenericsModule() {
         String moduleName = "Generics";
         String SchemaPath = XSD_GENERICS;
+    	String[] moduleElementNameList = {"GenericCityObject", "genericAttributeSet",  "stringAttribute",  "doubleAttribute", "dateAttribute", "uriAttribute", "measureAttribute"};
+    	StringBuffer sb = new StringBuffer();
+    	for(int s=0; s < moduleElementNameList.length; s++)
+    	{
+    		sb.append(moduleElementNameList[s]);
+    		if(s < (moduleElementNameList.length-1)) {
+    			sb.append(", ");
+    		}
+    		else {
+    			sb.append(" ");
+    		}
+    	}
+    	
+    	
+      	NodeList rootElementList = this.testSubject.getChildNodes();
+		
+    		boolean foundAtLeastOne = false;
+    		
+    		for(int a=0; a<rootElementList.getLength(); a++)
+    		{
+    			
+    			if(rootElementList.item(a).getClass().toString().equals("class org.apache.xerces.dom.DeferredElementNSImpl"))
+    			{
+    				DeferredElementNSImpl element = (DeferredElementNSImpl) rootElementList.item(a);
+    				
+    				if( element.getLocalName().equals("CityModel") &&
+    					element.getNamespaceURI().equals("http://www.opengis.net/citygml/2.0"))
+    		    	{
+    				  for(int b = 0 ; b< moduleElementNameList.length; b++) {
+    					NodeList nodeList = element.getElementsByTagNameNS("http://www.opengis.net/citygml/"+moduleName.toLowerCase()+"/2.0", moduleElementNameList[b]);    				
+    					if(nodeList.getLength()>0) {
+    						foundAtLeastOne = true;
+    				
+    					}
+    		    	 }
+    		    	}
+    				
+    			}
+    			
+    		}
+    		
+    		Assert.assertTrue(foundAtLeastOne,"None of "+sb.toString()+" elements was found in the document.");
 
-        if (!docNameSpace.contains(SchemaPath))
-            throw new SkipException("Not " + moduleName + " module.");
+        
+
     }
-
-
 }

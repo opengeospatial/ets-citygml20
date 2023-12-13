@@ -23,6 +23,8 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class AppearanceModuleValidation extends CommonFixture {
+	
+	
     public ArrayList<String> docNameSpace;
     @BeforeClass
     public void collectNamespace() {
@@ -34,35 +36,38 @@ public class AppearanceModuleValidation extends CommonFixture {
      */
     @Test(enabled = true, description = "B.2.2 Appearance module") //groups = "B.2 Conformance classes related to CityGML modules"
     public void verifyAppearanceModule() throws Exception{
-    	NodeList rootElementList = this.testSubject.getChildNodes();
-		
-		boolean foundAtLeastOneAppearance = false;
-		
-		for(int a=0; a<rootElementList.getLength(); a++)
-		{
-			
-			if(rootElementList.item(a).getClass().toString().equals("class org.apache.xerces.dom.DeferredElementNSImpl"))
-			{
-				DeferredElementNSImpl element = (DeferredElementNSImpl) rootElementList.item(a);
-				
-				if( element.getNodeName().equals("CityModel") &&
-					element.getNamespaceURI().equals("http://www.opengis.net/citygml/2.0"))
-		    	{
-				
-					NodeList appearanceList = element.getElementsByTagNameNS("http://www.opengis.net/citygml/appearance/2.0","Appearance");
-					if(appearanceList.getLength()>0) {
-						foundAtLeastOneAppearance = true;
-				
-					}
-		    	}
-				
-			}
-			
-		}
-		
-		Assert.assertTrue(foundAtLeastOneAppearance,"Expected to find at least one appearance element in the document but none was found.");
-
+        String SchemaPath = XSD_APPEARANCE;        
+    	String moduleName = "Appearance";
+        String moduleElementName = moduleName;
         
+      	NodeList rootElementList = this.testSubject.getChildNodes();
+		
+    		boolean foundAtLeastOne = false;
+    		
+    		for(int a=0; a<rootElementList.getLength(); a++)
+    		{
+    			
+    			if(rootElementList.item(a).getClass().toString().equals("class org.apache.xerces.dom.DeferredElementNSImpl"))
+    			{
+    				DeferredElementNSImpl element = (DeferredElementNSImpl) rootElementList.item(a);
+    				
+    				if( element.getLocalName().equals("CityModel") &&
+    					element.getNamespaceURI().equals("http://www.opengis.net/citygml/2.0"))
+    		    	{
+    				
+    					NodeList nodeList = element.getElementsByTagNameNS("http://www.opengis.net/citygml/"+moduleName.toLowerCase()+"/2.0", moduleElementName);
+    					if(nodeList.getLength()>0) {
+    						foundAtLeastOne = true;
+    				
+    					}
+    		    	}
+    				
+    			}
+    			
+    		}
+    		
+    		Assert.assertTrue(foundAtLeastOne,"No "+moduleElementName+" element was found in the document.");
+
         
     }
 
@@ -71,10 +76,6 @@ public class AppearanceModuleValidation extends CommonFixture {
      */
     @Test(enabled = true, description = "B.2.2 Appearance module - Clause 9.7 - Referential integrity 11", dependsOnMethods = { "verifyAppearanceModule" }) //groups = "B.2 Conformance classes related to CityGML modules"
     public void verifyAppearanceTextureCoordinatesToLinearRingId() throws Exception{
-        String moduleName = "Appearance";
-        String SchemaPath = XSD_APPEARANCE;
-
-
 
         String expressionPath;
         NodeList nodes;

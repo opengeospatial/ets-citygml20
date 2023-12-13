@@ -37,35 +37,50 @@ public class BridgeModuleValidation extends CommonFixture {
      */
     @Test(enabled = true, description = "B.2.3 Bridge module - Clause 10.5.8 Base Requirement 1")
     public void verifyBridgeModule() {
-    	NodeList rootElementList = this.testSubject.getChildNodes();
+        String SchemaPath = XSD_BRIDGE;
+       	String moduleName = "Bridge";
+    	String[] moduleElementNameList = {"BridgeInstallation", "BridgeConstructionElement",  "IntBridgeInstallation",  "BridgeFurniture", "BridgeRoom", "Bridge", "BridgePart"};
+    	StringBuffer sb = new StringBuffer();
+    	for(int s=0; s < moduleElementNameList.length; s++)
+    	{
+    		sb.append(moduleElementNameList[s]);
+    		if(s < (moduleElementNameList.length-1)) {
+    			sb.append(", ");
+    		}
+    		else {
+    			sb.append(" ");
+    		}
+    	}
+    	
+    	
+      	NodeList rootElementList = this.testSubject.getChildNodes();
 		
-		boolean foundAtLeastOneBridge = false;
-		
-		for(int a=0; a<rootElementList.getLength(); a++)
-		{
-			
-			if(rootElementList.item(a).getClass().toString().equals("class org.apache.xerces.dom.DeferredElementNSImpl"))
-			{
-				DeferredElementNSImpl element = (DeferredElementNSImpl) rootElementList.item(a);
-				
-				if( element.getNodeName().equals("CityModel") &&
-					element.getNamespaceURI().equals("http://www.opengis.net/citygml/2.0"))
-		    	{
-				
-					NodeList bridgeList = element.getElementsByTagNameNS("http://www.opengis.net/citygml/bridge/2.0","Bridge");
-					if(bridgeList.getLength()>0) {
-						foundAtLeastOneBridge = true;
-				
-					}
-		    	}
-				
-			}
-			
-		}
-		
-		Assert.assertTrue(foundAtLeastOneBridge,"Expected to find at least one Bridge element in the document but none was found.");
-
-        
+    		boolean foundAtLeastOne = false;
+    		
+    		for(int a=0; a<rootElementList.getLength(); a++)
+    		{
+    			
+    			if(rootElementList.item(a).getClass().toString().equals("class org.apache.xerces.dom.DeferredElementNSImpl"))
+    			{
+    				DeferredElementNSImpl element = (DeferredElementNSImpl) rootElementList.item(a);
+    				
+    				if( element.getLocalName().equals("CityModel") &&
+    					element.getNamespaceURI().equals("http://www.opengis.net/citygml/2.0"))
+    		    	{
+    				  for(int b = 0 ; b< moduleElementNameList.length; b++) {
+    					NodeList nodeList = element.getElementsByTagNameNS("http://www.opengis.net/citygml/"+moduleName.toLowerCase()+"/2.0", moduleElementNameList[b]);    				
+    					if(nodeList.getLength()>0) {
+    						foundAtLeastOne = true;
+    				
+    					}
+    		    	 }
+    		    	}
+    				
+    			}
+    			
+    		}
+    		
+    		Assert.assertTrue(foundAtLeastOne,"None of "+sb.toString()+" elements was found in the document.");
 
     }
 
