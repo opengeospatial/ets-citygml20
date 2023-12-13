@@ -1,5 +1,11 @@
 = Release Notes
 
+== 0.2 (2023-12-13)
+
+* https://github.com/opengeospatial/ets-citygml20/pull/29[#29] Fortify module validation
+* https://github.com/opengeospatial/ets-citygml20/pull/27[#27] Fortify core and appearance module validation
+* https://github.com/opengeospatial/ets-citygml20/pull/26[#26] Remove runtime open command from TestNGController
+
 == 0.1 (2023-11-27)
 * https://github.com/opengeospatial/ets-citygml20/pull/25[#25] Fix that version of test suite and basic conformance classes are displayed in HTML report and refactorings
 * https://github.com/opengeospatial/ets-citygml20/issues/21[#21] Separate optional conformance classes into separate packages
