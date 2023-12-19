@@ -2,9 +2,10 @@
 
 == 0.2 (2023-12-13)
 
-* https://github.com/opengeospatial/ets-citygml20/pull/29[#29] Fortify module validation
-* https://github.com/opengeospatial/ets-citygml20/pull/27[#27] Fortify core and appearance module validation
-* https://github.com/opengeospatial/ets-citygml20/pull/26[#26] Remove runtime open command from TestNGController
+* https://github.com/opengeospatial/ets-citygml20/issues/29[#29] Fortify module validation
+* https://github.com/opengeospatial/ets-citygml20/issues/27[#27] Fortify core and appearance module validation
+* https://github.com/opengeospatial/ets-citygml20/issues/26[#26] Remove runtime open command from TestNGController
+* https://github.com/opengeospatial/ets-citygml20/pull/33[#33] Update TEAM Engine dependencies to version 5.7
 
 == 0.1 (2023-11-27)
 * https://github.com/opengeospatial/ets-citygml20/pull/25[#25] Fix that version of test suite and basic conformance classes are displayed in HTML report and refactorings
