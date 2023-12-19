@@ -1,6 +1,6 @@
 = Release Notes
 
-== 0.2 (2023-12-13)
+== 0.2 (2023-12-19)
 
 * https://github.com/opengeospatial/ets-citygml20/issues/29[#29] Fortify module validation
 * https://github.com/opengeospatial/ets-citygml20/issues/27[#27] Fortify core and appearance module validation
