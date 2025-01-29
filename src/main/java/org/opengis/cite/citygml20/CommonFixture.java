@@ -1,9 +1,5 @@
 package org.opengis.cite.citygml20;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientRequest;
-import com.sun.jersey.api.client.ClientResponse;
-
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -13,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import javax.ws.rs.core.MediaType;
+
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -23,7 +19,22 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.Validator;
 
-import org.citygml4j.model.module.citygml.*;
+import org.citygml4j.model.module.citygml.AppearanceModule;
+import org.citygml4j.model.module.citygml.BridgeModule;
+import org.citygml4j.model.module.citygml.BuildingModule;
+import org.citygml4j.model.module.citygml.CityFurnitureModule;
+import org.citygml4j.model.module.citygml.CityObjectGroupModule;
+import org.citygml4j.model.module.citygml.CoreModule;
+import org.citygml4j.model.module.citygml.GenericsModule;
+import org.citygml4j.model.module.citygml.LandUseModule;
+import org.citygml4j.model.module.citygml.ReliefModule;
+import org.citygml4j.model.module.citygml.TexturedSurfaceModule;
+import org.citygml4j.model.module.citygml.TransportationModule;
+import org.citygml4j.model.module.citygml.TunnelModule;
+import org.citygml4j.model.module.citygml.VegetationModule;
+import org.citygml4j.model.module.citygml.WaterBodyModule;
+import org.glassfish.jersey.client.ClientRequest;
+import org.glassfish.jersey.client.ClientResponse;
 import org.opengis.cite.citygml20.util.ClientUtils;
 import org.opengis.cite.citygml20.util.ValidationUtils;
 import org.testng.ITestContext;
@@ -35,6 +46,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
+
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 /**
  * A supporting base class that sets up a common test fixture. These
@@ -57,7 +72,7 @@ public class CommonFixture {
     /**
      * An HTTP response message.
      */
-    protected ClientResponse response;
+    protected Response response;
 
 	protected Document testSubject;
 
@@ -120,27 +135,9 @@ public class CommonFixture {
      *
      * @see ClientUtils#getResponseEntityAsDocument
      */
-    public Document getResponseEntityAsDocument(ClientResponse response,
+    public Document getResponseEntityAsDocument(Response response,
             String targetURI) {
         return ClientUtils.getResponseEntityAsDocument(response, targetURI);
-    }
-
-    /**
-     * Builds an HTTP request message that uses the GET method. This convenience
-     * method wraps a static method call to facilitate unit testing (Mockito
-     * workaround).
-     *
-     * @param endpoint A URI indicating the target resource.
-     * @param qryParams A Map containing query parameters (may be null);
-     * @param mediaTypes A list of acceptable media types; if not specified,
-     * generic XML ("application/xml") is preferred.
-     * @return A ClientRequest object.
-     *
-     * @see ClientUtils#buildGetRequest
-     */
-    public ClientRequest buildGetRequest(URI endpoint,
-            Map<String, String> qryParams, MediaType... mediaTypes) {
-        return ClientUtils.buildGetRequest(endpoint, qryParams, mediaTypes);
     }
 
 	/**
