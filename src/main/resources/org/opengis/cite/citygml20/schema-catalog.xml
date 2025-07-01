@@ -35,6 +35,14 @@
     <uri name="http://www.isotc211.org/2005/gss" uri="./xsd/iso/19139/2007/gss-2007.xsd" />
     <uri name="http://www.isotc211.org/2005/gsr" uri="./xsd/iso/19139/2007/gsr-2007.xsd" />
   </group>
+  <group id="oasis-open.org">
+	<system systemId="http://docs.oasis-open.org/election/external/xAL.xsd"
+      uri="./xsd/opengis/citygml/xAL/xAL.xsd" />
+    <system systemId="https://docs.oasis-open.org/election/external/xAL.xsd"
+      uri="./xsd/opengis/citygml/xAL/xAL.xsd" />
+    <uri name="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0" uri="./xsd/opengis/citygml/xAL/xAL.xsd" />
+  </group>
+
 
   <nextCatalog catalog="./schematron-catalog.xml" />
 </catalog>
